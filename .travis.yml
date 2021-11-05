@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- 13
+services:
+- docker
+# pre-testing installs
+install:
+- echo "nothing need ot install"
+# Scripts to be run such as tests
+before-script:
+- echo "no tests"
+script:
+- docker --version # print the version for logging
+- docker build -t sample-node .
+- docker tag sample-node hosamsaleh/sample-node
+after_success:
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- docker push hosamsaleh/sample-node
